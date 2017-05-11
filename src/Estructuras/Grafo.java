@@ -29,7 +29,7 @@ public class Grafo {
         return aux;
     }
 
-    public boolean insertarArco(String origen, String destino) {
+    public boolean insertarArco(String origen, String destino, int etiqueta) {
         boolean seInserto = false;
         NodoVert o = ubicarVertice(origen);
         if (o != null) {
@@ -40,9 +40,9 @@ public class Grafo {
                     while (aux.getSigAdyacente() != null) {
                         aux = aux.getSigAdyacente();
                     }
-                    aux.setSigAdyacente(new NodoAdy(d, null));
+                    aux.setSigAdyacente(new NodoAdy(d, etiqueta,  null));
                 } else {
-                    o.setPrimerAdy(new NodoAdy(d, null));
+                    o.setPrimerAdy(new NodoAdy(d, etiqueta, null));
                 }
                 seInserto = true;
             }
