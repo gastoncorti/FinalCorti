@@ -1,13 +1,13 @@
 package Estructuras.Nodo;
 
-import Estructuras.Nodo.NodoVert;
-
 public class NodoAdy {
     private NodoVert vertice;
+    private int etiqueta;
     private NodoAdy sigAdyacente;
 
-    public NodoAdy(NodoVert vertice, NodoAdy sigAdyacente) {
+    public NodoAdy(NodoVert vertice, int etiqueta , NodoAdy sigAdyacente) {
         this.vertice = vertice;
+        this.etiqueta = etiqueta;
         this.sigAdyacente = sigAdyacente;
     }
 
@@ -26,6 +26,15 @@ public class NodoAdy {
     public void setSigAdyacente(NodoAdy sigAdyacente) {
         this.sigAdyacente = sigAdyacente;
     }
+
+    public int getEtiqueta() {
+        return etiqueta;
+    }
+
+    public void setEtiqueta(int etiqueta) {
+        this.etiqueta = etiqueta;
+    }
+    
 }
 
 
