@@ -67,9 +67,8 @@ public class Diccionario {
     private boolean eliminarAux(String clave, NodoDic nodoElim, NodoDic padre) {
         boolean seElimino = false;
         String cantHijos;
-        String valorAux;
+        String claveAux;
         Ciudad ciudadAux;
-        NodoDic aux;
         if (nodoElim != null) {
             //Lo busco por izq
             if (clave.compareTo(nodoElim.getClave()) < 0) {
@@ -82,18 +81,21 @@ public class Diccionario {
                 //Lo encontre ahora ver cantidad de hijos
             } else {
                 //Switch de caso eliminacion
-                cantHijos = casoEliminacion(nodoElim);
+                cantHijos = hijos(nodoElim);
                 switch (cantHijos) {
                     case "AMBOS":
                         if (padre == null) {
                             raiz = null;
                         } else {
-                            if (nodoElim.getClave().compareTo(padre.getClave()) < 0) {
-                                padre.setIzq(null);
-                            } else {
-                                padre.setDer(null);
-                            }
-                            padre.setAltura(alturaNodo(padre));
+                            //buscar sustituto hoja menor en subarbol derecho
+                            NodoDic sustituto = buscarSustituto(nodoElim.getDer());
+                            claveAux = sustituto.getClave();
+                            ciudadAux = sustituto.getCiudad();
+                            eliminarAux(sustituto.getClave(), raiz, null);
+                            nodoElim.setClave(claveAux);
+                            nodoElim.setCiudad(ciudadAux);
+                            nodoElim.setAltura(alturaNodo(nodoElim));
+                            //padre.setAltura(alturaNodo(padre));
                         }
                         break;
                     case "IZQ":
@@ -101,12 +103,12 @@ public class Diccionario {
                             raiz = raiz.getIzq();
                             raiz.setAltura(alturaNodo(raiz));
                         } else {
-                            if (nodoElim.getClave().compareTo(padre.getClave()) < 0) {
+                            if (padre.getClave().compareTo(nodoElim.getClave()) > 0) {
                                 padre.setIzq(nodoElim.getIzq());
                             } else {
                                 padre.setDer(nodoElim.getIzq());
                             }
-                            padre.setAltura(alturaNodo(padre));
+                            //padre.setAltura(alturaNodo(padre));
                         }
                         break;
                     case "DER":
@@ -114,123 +116,59 @@ public class Diccionario {
                             raiz = raiz.getDer();
                             raiz.setAltura(alturaNodo(raiz));
                         } else {
-                            if (nodoElim.getClave().compareTo(padre.getClave()) < 0) {
+                            if (padre.getClave().compareTo(nodoElim.getClave()) > 0) {
                                 padre.setIzq(nodoElim.getDer());
                             } else {
                                 padre.setDer(nodoElim.getDer());
                             }
-                            padre.setAltura(alturaNodo(padre));
+                            //padre.setAltura(alturaNodo(padre));
                         }
                         break;
                     default:
-                        aux = nodoElim.getIzq();
-                        while (aux.getDer() != null) {
-                            aux = aux.getDer();
-                        }
-                        valorAux = aux.getClave();
-                        ciudadAux = aux.getCiudad();
-                        eliminarAux(valorAux, raiz, null);
-                        nodoElim.setClave(valorAux);
-                        nodoElim.setCiudad(ciudadAux);
-                        nodoElim.setAltura(alturaNodo(nodoElim));
-                        if (padre != null) {
-                            padre.setAltura(alturaNodo(padre));
-                        }
-                        break;
-                }
-                seElimino = true;
-            }
-            balancear(nodoElim, padre);
-        }
-        return seElimino;
-    }
-
-    /*
-    private boolean eliminarAuxAUX(NodoArb raizActual, NodoArb padre, int elem) {
-        boolean seElimino = false;
-        if (raizActual != null) {
-            if (raizActual.getElem() != elem) {
-                if (raizActual.getElem() > elem) { //por izq
-                    seElimino = eliminarAux(raizActual.getIzq(), raizActual, elem);
-                } else {// por der
-                    seElimino = eliminarAux(raizActual.getDer(), raizActual, elem);
-                }
-            } else { //encontre el elemento a eliminar
-                switch (casoEliminacion(raizActual)) {
-                    case 1:
-                        NodoArb sustituto = new NodoArb(buscarSustituto(raizActual));
-                        sustituto.setIzq(raizActual.getIzq());
-                        sustituto.setDer(raizActual.getDer());
-                        if (eliminar(sustituto.getElem())) {
-                            if (padre == null) { // quiere borrar raiz
-                                raiz = sustituto;
-                            } else {
-                                if (padre.getElem() > elem) {
-                                    padre.setIzq(sustituto);
-                                } else {
-                                    padre.setDer(sustituto);
-                                }
-                            }
-                        }
-                        break;
-                    case 2:
-                        if (padre.getElem() > elem) {
-                            padre.setIzq(raizActual.getIzq());
-                        } else {
-                            padre.setDer(raizActual.getIzq());
-                        }
-                        break;
-                    case 3:
-                        //tiene hder
-                        if (padre.getElem() > elem) {
-                            padre.setIzq(raizActual.getDer());
-                        } else {
-                            padre.setIzq(raizActual.getDer());
-                        }
-                        break;
-                    case 4:
-                        if (padre.getElem() > elem) {
+                        if (padre.getClave().compareTo(nodoElim.getClave()) > 0) {
                             padre.setIzq(null);
                         } else {
                             padre.setDer(null);
                         }
                         break;
                 }
+                if (padre != null) {
+                    padre.setAltura(alturaNodo(padre));
+                }
                 seElimino = true;
             }
+            if (seElimino) {
+                balancear(nodoElim, padre);
+            }
         }
-
         return seElimino;
     }
-     */
-    private String casoEliminacion(NodoDic nodoEliminar) {
+
+    private String hijos(NodoDic nodoElim) {
         String caso = "";
-        if(nodoEliminar.getIzq() != null) {
-            if (nodoEliminar.getDer() != null) {
+        if (nodoElim.getIzq() != null) {
+            if (nodoElim.getDer() != null) {
                 caso = "AMBOS";
             } else {
                 caso = "IZQ";
             }
         } else {
-            if(nodoEliminar.getDer() != null) {
+            if (nodoElim.getDer() != null) {
                 caso = "DER";
             }
         }
         return caso;
     }
 
-    /*
-    private Ciudad buscarSustituto(NodoArb nodoEliminar) {
-        Ciudad sustituto = nodoEliminar.getDer().getCiudad();
-        NodoArb nodoAux = nodoEliminar.getDer();
-        while (nodoAux.getIzq() != null) {
-            sustituto = nodoAux.getIzq().getCiudad();
-            nodoAux = nodoAux.getIzq();
+    private NodoDic buscarSustituto(NodoDic nodoElim) {
+        NodoDic sustituto = nodoElim;
+        while (sustituto.getIzq() != null) {
+            sustituto = sustituto.getIzq();
         }
         return sustituto;
-    }*/
+    }
 
- /*public int padre(String clave) {
+    /*public int padre(String clave) {
         int padre = 0;
 
         if (raiz != null) {

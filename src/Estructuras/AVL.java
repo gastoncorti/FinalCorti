@@ -6,7 +6,7 @@ import Utiles.Ciudad;
 
 public class AVL {
 
-    private NodoArb raiz;
+  /*  private NodoArb raiz;
 
     public AVL() {
         this.raiz = null;
@@ -331,5 +331,5 @@ public class AVL {
             }
         }
         return res;
-    }
+    }*/
 }

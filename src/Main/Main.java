@@ -1,6 +1,21 @@
 package Main;
+import Estructuras.Diccionario;
+import Utiles.Ciudad;
+
 public class Main {
     public static void main (String[] args) {
+        Diccionario d = new Diccionario();
+        d.insertar("1", new Ciudad("1", "1", 12, true));
+        d.insertar("4", new Ciudad("4", "4", 12, true));
+        d.insertar("6", new Ciudad("6", "6", 12, true));
+        d.insertar("3", new Ciudad("3", "3", 12, true));
+        d.insertar("2", new Ciudad("2", "2", 12, true));
+        d.insertar("0", new Ciudad("0", "0", 12, true));
+        
+        d.listarNivel();
+        d.eliminar("4");
+        System.out.println("");
+        d.listarNivel();
         
     }
 }
