@@ -137,7 +137,7 @@ public class ListaStr {
         if (!esVacia()) {
             NodoStr aux = cabecera;
             for (int i = 1; i <= this.longitud(); i++) {
-                cad = cad + aux.getElem() + ",";
+                cad = cad + aux.getElem() + " ";
                 aux = aux.getEnlace();
             }
         } else {

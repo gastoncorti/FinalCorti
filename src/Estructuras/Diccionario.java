@@ -168,172 +168,6 @@ public class Diccionario {
         return sustituto;
     }
 
-    /*public int padre(String clave) {
-        int padre = 0;
-
-        if (raiz != null) {
-            if (raiz.getElem() != elem) {
-                NodoArb nodo = getPadre(raiz, elem);
-                padre = (nodo != null) ? nodo.getElem() : 0;
-            } else {
-                padre = raiz.getElem();
-            }
-        }
-        return padre;
-    }*/
-
- /* private NodoArb getPadre(NodoArb raizActual, int elem) {
-        NodoArb padre = null;
-        if (raizActual != null) {
-            if (raizActual.getElem() > elem) {//busco por izq
-                if (raizActual.getIzq().getElem() != elem) {
-                    padre = getPadre(raizActual.getIzq(), elem);
-                } else {
-                    padre = raizActual;
-                }
-            } else { //busco por derecha
-                if (raizActual.getDer().getElem() != elem) {
-                    padre = getPadre(raizActual.getDer(), elem);
-                } else {
-                    padre = raizActual;
-                }
-            }
-        }
-        return padre;
-    }
-     */
- /*  public boolean pertenece(int elem) {
-        return perteneceAux(elem, raiz);
-    }
-
-    public boolean perteneceAux(int elem, NodoArb raizActual) {
-        boolean pertenece = false;
-        if (raizActual != null) {
-            if (raizActual.getElem() != elem) {
-                if (raizActual.getElem() > elem) {
-                    pertenece = perteneceAux(elem, raizActual.getIzq());
-                } else {
-                    pertenece = perteneceAux(elem, raizActual.getDer());
-                }
-            } else {
-                pertenece = true;
-            }
-        }
-        return pertenece;
-    }
-     */
-    public boolean esVacio() {
-        return (raiz == null);
-    }
-
-    public int alturaNodo(NodoDic raizActual) {
-        return alturaAux(raizActual);
-    }
-
-    public int alturaArbol() {
-        return alturaAux(raiz);
-    }
-
-    private int alturaAux(NodoDic raizActual) {
-        int altD = 0, altI = 0, alt;
-        if (raizActual != null) {
-            if (raizActual.getIzq() != null) {
-                altI = 1 + alturaAux(raizActual.getIzq());
-            }
-            if (raizActual.getDer() != null) {
-                altD = 1 + alturaAux(raizActual.getDer());
-            }
-            alt = (altI >= altD) ? altI : altD;
-        } else {
-            alt = 0;
-        }
-        return alt;
-    }
-
-    public int nivel(int elem) {
-        return 0;
-    }
-
-    public void vaciar() {
-        raiz = null;
-    }
-
-    /* public ArbolBB clonar() {
-        ArbolBB clon = new ArbolBB();
-        clonarAux(raiz, clon);
-        return clon;
-    }
-
-     private void clonarAux(NodoArb raizActual, AVL clon) {
-        if (raizActual != null) {
-            clon.insertar(raizActual.getCiudad());
-            if (raizActual.getIzq() != null) {
-                clonarAux(raizActual.getIzq(), clon);
-            }
-            if (raizActual.getDer() != null) {
-                clonarAux(raizActual.getDer(), clon);
-            }
-        }
-    }
-     */
-    public void listar() {
-        if (raiz != null) {
-            listarAux(raiz);
-        } else {
-            System.out.println("Sin Elem");
-        }
-    }
-
-    private void listarAux(NodoDic nActual) {
-        if (nActual != null) {
-            listarAux(nActual.getIzq());
-            System.out.print(nActual.getCiudad().getNombre() + ",");
-            listarAux(nActual.getDer());
-        }
-    }
-
-    public void listarAltura() {
-        if (raiz != null) {
-            listarAlturaAux(raiz);
-            System.out.print("\n");
-        } else {
-            System.out.println("Sin Elem");
-        }
-    }
-
-    private void listarAlturaAux(NodoDic nActual) {
-        if (nActual != null) {
-            listarAlturaAux(nActual.getIzq());
-            System.out.print(nActual.getCiudad().getNombre() + ",Alt: " + nActual.getAltura() + "\n");
-            listarAlturaAux(nActual.getDer());
-        }
-    }
-
-    public void listarNivel() {
-        if (raiz != null) {
-            listarNivelAux(raiz);
-        } else {
-            System.out.println("Sin Elem");
-        }
-    }
-
-    private void listarNivelAux(NodoDic raizActual) {
-        Queue cola = new LinkedList();
-        cola.add(raizActual);
-        while (!cola.isEmpty()) {
-            NodoDic nodoAux = (NodoDic) cola.poll();
-            System.out.print(nodoAux.getCiudad().getNombre());
-
-            if (nodoAux.getIzq() != null) {
-                cola.add(nodoAux.getIzq());
-            }
-            if (nodoAux.getDer() != null) {
-                cola.add(nodoAux.getDer());
-            }
-
-        }
-    }
-
     private void balancear(NodoDic nodo, NodoDic padre) {
         int balance;
         NodoDic aux;
@@ -411,4 +245,168 @@ public class Diccionario {
         }
         return res;
     }
+
+    /*public int padre(String clave) {
+        int padre = 0;
+        if (raiz != null) {
+            if (raiz.getElem() != elem) {
+                NodoArb nodo = getPadre(raiz, elem);
+                padre = (nodo != null) ? nodo.getElem() : 0;
+            } else {
+                padre = raiz.getElem();
+            }
+        }
+        return padre;
+    }*/
+
+ /* private NodoArb getPadre(NodoArb raizActual, int elem) {
+        NodoArb padre = null;
+        if (raizActual != null) {
+            if (raizActual.getElem() > elem) {//busco por izq
+                if (raizActual.getIzq().getElem() != elem) {
+                    padre = getPadre(raizActual.getIzq(), elem);
+                } else {
+                    padre = raizActual;
+                }
+            } else { //busco por derecha
+                if (raizActual.getDer().getElem() != elem) {
+                    padre = getPadre(raizActual.getDer(), elem);
+                } else {
+                    padre = raizActual;
+                }
+            }
+        }
+        return padre;
+    }
+     */
+ /*  public boolean pertenece(int elem) {
+        return perteneceAux(elem, raiz);
+    }
+    public boolean perteneceAux(int elem, NodoArb raizActual) {
+        boolean pertenece = false;
+        if (raizActual != null) {
+            if (raizActual.getElem() != elem) {
+                if (raizActual.getElem() > elem) {
+                    pertenece = perteneceAux(elem, raizActual.getIzq());
+                } else {
+                    pertenece = perteneceAux(elem, raizActual.getDer());
+                }
+            } else {
+                pertenece = true;
+            }
+        }
+        return pertenece;
+    }
+     */
+    public boolean esVacio() {
+        return (raiz == null);
+    }
+
+    public int alturaNodo(NodoDic raizActual) {
+        return alturaAux(raizActual);
+    }
+
+    public int alturaArbol() {
+        return alturaAux(raiz);
+    }
+
+    private int alturaAux(NodoDic raizActual) {
+        int altD = 0, altI = 0, alt;
+        if (raizActual != null) {
+            if (raizActual.getIzq() != null) {
+                altI = 1 + alturaAux(raizActual.getIzq());
+            }
+            if (raizActual.getDer() != null) {
+                altD = 1 + alturaAux(raizActual.getDer());
+            }
+            alt = (altI >= altD) ? altI : altD;
+        } else {
+            alt = 0;
+        }
+        return alt;
+    }
+
+    public int nivel(int elem) {
+        return 0;
+    }
+
+    public void vaciar() {
+        raiz = null;
+    }
+
+    /* public ArbolBB clonar() {
+        ArbolBB clon = new ArbolBB();
+        clonarAux(raiz, clon);
+        return clon;
+    }
+     private void clonarAux(NodoArb raizActual, AVL clon) {
+        if (raizActual != null) {
+            clon.insertar(raizActual.getCiudad());
+            if (raizActual.getIzq() != null) {
+                clonarAux(raizActual.getIzq(), clon);
+            }
+            if (raizActual.getDer() != null) {
+                clonarAux(raizActual.getDer(), clon);
+            }
+        }
+    }
+     */
+    public void listar() {
+        if (raiz != null) {
+            listarAux(raiz);
+        } else {
+            System.out.println("Sin Elem");
+        }
+    }
+
+    private void listarAux(NodoDic nActual) {
+        if (nActual != null) {
+            listarAux(nActual.getIzq());
+            System.out.print(nActual.getCiudad().getNombre() + ",");
+            listarAux(nActual.getDer());
+        }
+    }
+
+    public void listarAltura() {
+        if (raiz != null) {
+            listarAlturaAux(raiz);
+            System.out.print("\n");
+        } else {
+            System.out.println("Sin Elem");
+        }
+    }
+
+    private void listarAlturaAux(NodoDic nActual) {
+        if (nActual != null) {
+            listarAlturaAux(nActual.getIzq());
+            System.out.print(nActual.getCiudad().getNombre() + ",Alt: " + nActual.getAltura() + "\n");
+            listarAlturaAux(nActual.getDer());
+        }
+    }
+
+    public void listarNivel() {
+        if (raiz != null) {
+            listarNivelAux(raiz);
+        } else {
+            System.out.println("Sin Elem");
+        }
+    }
+
+    private void listarNivelAux(NodoDic raizActual) {
+        Queue cola = new LinkedList();
+        cola.add(raizActual);
+        while (!cola.isEmpty()) {
+            NodoDic nodoAux = (NodoDic) cola.poll();
+            System.out.print(nodoAux.getCiudad().getNombre());
+
+            if (nodoAux.getIzq() != null) {
+                cola.add(nodoAux.getIzq());
+            }
+            if (nodoAux.getDer() != null) {
+                cola.add(nodoAux.getDer());
+            }
+
+        }
+    }
+
 }
