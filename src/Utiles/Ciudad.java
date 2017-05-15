@@ -5,7 +5,12 @@ public class Ciudad {
     private String nombre, provincia;
     private int habitantes;
     private boolean alojamientoDisp;
-
+    public Ciudad() {
+        nombre = "N/A";
+        provincia = "N/A";
+        habitantes = 0;
+        alojamientoDisp = false;
+    }
     public Ciudad(String nom, String prov, int hab, boolean disp) {
         nombre = nom;
         provincia = prov;
@@ -50,3 +55,4 @@ public class Ciudad {
         return "C: " + nombre + " P: " + provincia + " H: " + habitantes + " Alojamiento: " + ((alojamientoDisp) ? "Si" : "No");
     }
 }
+
