@@ -1,43 +1,34 @@
-package Estructuras;
+package Estructuras.Nodo;
 import Utiles.Ciudad;
 
 public class NodoDic {
-    private String clave;
-    private Ciudad elem;
+
+    private NodoDic izq, der;
     private int altura;
-    private NodoDic hIzq;
-    private NodoDic hDer;
-    
-    
-    public NodoDic(String clave, Ciudad elem){
+    private String clave;
+    private Ciudad ciudad;
+
+    public NodoDic(String clave, Ciudad ciudad) {
+        this.ciudad = ciudad;
         this.clave = clave;
-        this.elem = elem;
-        this.hDer = null;
-        this.hIzq = null;
-    }
-
-    public Ciudad getElem() {
-        return elem;
-    }
-
-    public void setElem(Ciudad elem) {
-        this.elem = elem;
+        this.altura = 0;
+        
     }
 
     public NodoDic getIzq() {
-        return hIzq;
+        return izq;
     }
 
-    public void setIzq(NodoDic hIzq) {
-        this.hIzq = hIzq;
+    public void setIzq(NodoDic izq) {
+        this.izq = izq;
     }
 
     public NodoDic getDer() {
-        return hDer;
+        return der;
     }
 
-    public void setDer(NodoDic hDer) {
-        this.hDer = hDer;
+    public void setDer(NodoDic der) {
+        this.der = der;
     }
 
     public int getAltura() {
@@ -55,6 +46,13 @@ public class NodoDic {
     public void setClave(String clave) {
         this.clave = clave;
     }
-    
-    
+
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
+ 
 }
