@@ -1,71 +1,95 @@
-package Main;
+package Estructuras.Main;
+
 import Estructuras.Diccionario;
+import Utiles.ServicioViajero;
+import Estructuras.Grafo;
 import Utiles.Ciudad;
+import Utiles.TecladoIn;
+import Estructuras.ListaStr;
 
 public class Main {
-    public static void main (String[] args) {
-        Diccionario d = new Diccionario();
-        d.insertar("1", new Ciudad("1", "1", 12, true));
-        d.insertar("4", new Ciudad("4", "4", 12, true));
-        d.insertar("6", new Ciudad("6", "6", 12, true));
-        d.insertar("3", new Ciudad("3", "3", 12, true));
-        d.insertar("2", new Ciudad("2", "2", 12, true));
-        d.insertar("0", new Ciudad("0", "0", 12, true));
+
+    public static void main(String[] args) {
+        int opcion;
+        boolean corriendo = true;
+        ServicioViajero sv = new ServicioViajero();
+        sv.cargaTesting();
         
-        d.listarNivel();
-        d.eliminar("4");
-        System.out.println("");
-        d.listarNivel();
-        
+        while (corriendo) {
+            ServicioViajero.menu();
+            opcion = TecladoIn.readLineInt();
+            /*
+            1 - Alta Ciudad.
+            2 - Baja Ciudad.
+            3 - Alta Ruta.
+            4 - Baja Ruta.
+            5 - Información Ciudad.
+            6 - Listar rango de ciudades.
+            7 - Camino más corto.
+            8 - Camino más corto que x kilometros.
+            9 - Camino que pasa por la menor cantidad de ciudades.
+            10 - Camino a traves de ciudades con alojamiento.
+            11 - Listar ciudades por orden alfabetico.
+            12 - Mostrar diccionario.
+            13 - Mostrar grafo.
+            */
+            switch (opcion) {
+                //1-13
+                case 1: sv.altaCiudad();
+                    break;
+                case 2: sv.bajaCiudad();
+                    break;
+                case 3: sv.altaRuta();
+                    break;
+                case 4: sv.bajaRuta();
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    break;
+                case 11:
+                    break;
+                case 12:
+                    break;
+                case 13:
+                    break;
+                case 0:
+                    corriendo = false;
+                    System.out.println("¡Buen Viaje!");
+                    break;
+                default:
+                    System.out.println("Existian MUCHAS opciones, no seleccionaste ninguna :( ");
+                    break;
+
+            }
+        }
+
+    }
+
+    public static void Pruebas() {
+
+        Grafo g = new Grafo();
+        g.insertarVertice("A");
+        g.insertarVertice("B");
+        g.insertarVertice("C");
+        g.insertarVertice("D");
+        g.insertarVertice("E");
+
+        g.insertarArco("A", "B", 2);
+        g.insertarArco("A", "D", 3);
+        g.insertarArco("B", "C", 1);
+        g.insertarArco("C", "E", 3);
+        g.insertarArco("D", "E", 5);
+
+        ListaStr list = g.caminoMasCorto("A", "E");
+        System.out.println(list.toString());
     }
 }
-
-
-/*
-    // CORDOBA, ROSARIO, RESISTENCIA, PARANA, CIPOLLETI, VIEDMA, TRELEW, RAWSON, CONCEPCION, POSADAS
-        //AZUL, RECONQUISTA, NEUQUEN, ROSARIO, USHUAIA
-        ServicioViajero sv = new ServicioViajero();
-
-        sv.insertarCiudad("CORDOBA", new Ciudad("CORDOBA", "CORDOBA", 157010, false));
-        sv.insertarCiudad("ROSARIO", new Ciudad("ROSARIO", "SANTA FE", 748312, false));
-        sv.insertarCiudad("RESISTENCIA", new Ciudad("RESISTENCIA", "CHACO", 290723, false));
-        sv.insertarCiudad("PARANA", new Ciudad("PARANA", "ENTRE RIOS", 247863, false));
-        sv.insertarCiudad("NEUQUEN", new Ciudad("NEUQUEN", "NEUQUEN", 201868, true));
-        sv.insertarCiudad("CIPOLLETI", new Ciudad("CIPOLLETI", "RIO NEGRO", 66472, true));
-        sv.insertarCiudad("VIEDMA", new Ciudad("VIEDMA", "RIO NEGRO", 46767, true));
-        sv.insertarCiudad("TRELEW", new Ciudad("TRELEW", "CHUBUT", 103656, true));
-        sv.insertarCiudad("RAWSON", new Ciudad("RAWSON", "CHUBUT", 31787, false));
-        sv.insertarCiudad("CONCEPCION", new Ciudad("CONCEPCION", "TUCUMAN", 46194, false));
-        sv.insertarCiudad("POSADAS", new Ciudad("POSADAS", "MISIONES", 354719, false));
-        sv.insertarCiudad("AZUL", new Ciudad("AZUL", "BUENOS AIRES", 53054, false));
-        sv.insertarCiudad("RECONQUISTA", new Ciudad("RECONQUISTA", "SANTA FE", 66187, false));
-        sv.insertarCiudad("ROSARIO", new Ciudad("ROSARIO", "SANTA FE", 748312, false));
-        sv.insertarCiudad("USHUAIA", new Ciudad("USHUAIA", "TIERRA DEL FUEGO", 56825, false));
-
-        sv.insertarArco("VIEDMA", "TRELEW", 363);
-        sv.insertarArco("CONCEPCION", "VIEDMA", 552);
-        sv.insertarArco("CONCEPCION", "AZUL", 709);
-        sv.insertarArco("RECONQUISTA", "USHUAIA", 279);
-        sv.insertarArco("AZUL", "ROSARIO", 9.8);
-        sv.insertarArco("AZUL", "CIPOLLETI", 689);
-        sv.insertarArco("CORDOBA", "ROSARIO", 404.6);
-        sv.insertarArco("CORDOBA", "AZUL", 531);
-        sv.insertarArco("POSADAS", "RESISTENCIA", 626);
-        sv.insertarArco("RESISTENCIA", "PARANA", 465);
-        sv.insertarArco("RESISTENCIA", "CIPOLLETI", 1265);
-        sv.insertarArco("NEUQUEN", "villa maria", 268);
-        sv.insertarArco("NEUQUEN", "RESISTENCIA", 954);
-        sv.insertarArco("NEUQUEN", "POSADAS", 408);
-        sv.insertarArco("TRELEW", "POSADAS", 128);
-        sv.insertarArco("TRELEW", "NEUQUEN", 375);
-        sv.insertarArco("TRELEW", "RAWSON", 1068);
-        sv.insertarArco("ROSARIO", "NEUQUEN", 428);
-        sv.insertarArco("ROSARIO", "RESISTENCIA", 1604);
-        sv.insertarArco("RAWSON", "ROSARIO", 724);
-        sv.insertarArco("RAWSON", "AZUL", 403);
-        sv.insertarArco("PARANA", "CONCEPCION", 323);
-        sv.insertarArco("PARANA", "NEUQUEN", 453);
-        sv.insertarArco("USHUAIA", "AZUL", 527);
-        sv.insertarArco("USHUAIA", "NEUQUEN", 184);
-
-*/
