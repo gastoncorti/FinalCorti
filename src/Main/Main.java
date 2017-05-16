@@ -12,9 +12,10 @@ public class Main {
     public static void main(String[] args) {
         int opcion;
         boolean corriendo = true;
+        //Pruebas();
         ServicioViajero sv = new ServicioViajero();
         sv.cargaTesting();
-        
+
         while (corriendo) {
             ServicioViajero.menu();
             opcion = TecladoIn.readLineInt();
@@ -32,18 +33,23 @@ public class Main {
             11 - Listar ciudades por orden alfabetico.
             12 - Mostrar diccionario.
             13 - Mostrar grafo.
-            */
+             */
             switch (opcion) {
                 //1-13
-                case 1: sv.altaCiudad();
+                case 1:
+                    sv.altaCiudad();
                     break;
-                case 2: sv.bajaCiudad();
+                case 2:
+                    sv.bajaCiudad();
                     break;
-                case 3: sv.altaRuta();
+                case 3:
+                    sv.altaRuta();
                     break;
-                case 4: sv.bajaRuta();
+                case 4:
+                    sv.bajaRuta();
                     break;
                 case 5:
+                    sv.informacionCiudad();
                     break;
                 case 6:
                     break;
@@ -90,6 +96,9 @@ public class Main {
         g.insertarArco("D", "E", 5);
 
         ListaStr list = g.caminoMasCorto("A", "E");
+
         System.out.println(list.toString());
+
+        System.out.println(g.listarAnchura());
     }
 }
