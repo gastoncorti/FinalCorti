@@ -43,7 +43,12 @@ public class ServicioViajero {
     public void bajaCiudad() {
         String bajaCiudad = "";
         System.out.println("Nombre ciudad para dar de baja: ");
-        bajaCiudad = TecladoIn.readLine();
+        bajaCiudad = TecladoIn.readLine().toUpperCase();
+        if(diccionario.eliminar(bajaCiudad) && conexiones.eliminarVertice(bajaCiudad)) {
+            System.out.println("Se dio de baja correctamente.");
+        } else {
+            System.out.println("La ciudad no existe.");
+        }
 
     }
 
@@ -60,16 +65,28 @@ public class ServicioViajero {
         if (conexiones.insertarArco(origen, destino, km)) {
             System.out.println("Se dio el alta correctamente.");
         } else {
-            System.out.println("Esta ruta ya se encuentra cargada.");
+            System.out.println("Esta ruta ya se encuentra cargada o no se encontro la ciudad de origen/destino.");
         }
     }
 
     public void bajaRuta() {
-
+        String origen = "", destino = "";
+        System.out.println("Nombre del origen de la ruta: ");
+        origen = TecladoIn.readLine().toUpperCase();
+        System.out.println("Nombre del destino de la ruta: ");
+        destino = TecladoIn.readLine().toUpperCase();
+        if(conexiones.eliminarAdyacente(origen, destino) ) {
+            System.out.println("Se dio de baja correctamente.");
+        } else {
+            System.out.println("La ciudad origen/destino no existe o no existe la ruta.");
+        }
     }
 
     public void informacionCiudad() {
-
+        Ciudad ciudad;
+        System.out.println("Ingrese ciudad: ");
+        ciudad = diccionario.recuperarElemento(TecladoIn.readLine().toUpperCase());
+        System.out.println(ciudad.toString());
     }
 
     public void listarRangoCiudades() {
