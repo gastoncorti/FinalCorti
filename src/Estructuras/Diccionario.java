@@ -246,6 +246,26 @@ public class Diccionario {
         return res;
     }
 
+    public Ciudad recuperarElemento(String clave) {
+        return recuperarElementoAux(raiz, clave);
+    }
+
+    private Ciudad recuperarElementoAux(NodoDic raizActual, String clave) {
+        Ciudad ciudad = null;
+        if(raizActual != null) {
+            if(!raizActual.getClave().equals(clave)) {
+                if(raizActual.getClave().compareTo(clave) > 0) {
+                    ciudad = recuperarElementoAux(raizActual.getIzq(), clave);
+                } else {
+                    ciudad = recuperarElementoAux(raizActual.getDer(), clave);
+                }
+            } else {
+                ciudad = raizActual.getCiudad();
+            }
+        }
+        return ciudad;
+    }
+
     /*public int padre(String clave) {
         int padre = 0;
         if (raiz != null) {

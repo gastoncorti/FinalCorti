@@ -54,18 +54,14 @@ public class Grafo {
     public boolean eliminarVertice(String elem) {
         boolean seElimino = false;
         NodoVert anterior = inicio;
-        //Borro todas las referencias que tengan los ady
-        seElimino = eliminarVerticesAdy(elem);
-        
-        //ahora lo borro de la lista de Vertices
         if (anterior.getElem().equals(elem)) {//Si es el inicial
-            inicio.setSigVertice(inicio.getSigVertice());
+            inicio = inicio.getSigVertice();
             seElimino = true;
         } else {//no es el inicial loopeo por los vertices
-            while (anterior.getSigVertice() != null) {
+            while (anterior.getSigVertice() != null && !seElimino) {
                 if (anterior.getSigVertice().getElem().equals(elem)) {
-                    //Si encontre el anterior y borro el elemento.
-                    anterior.setSigVertice(anterior.getSigVertice());
+                    //Si encontre el anterior borro el elemento.
+                    anterior.setSigVertice(anterior.getSigVertice().getSigVertice());
                     seElimino = true;
                 } else {
                     //sigo buscando
@@ -73,24 +69,28 @@ public class Grafo {
                 }
             }
         }
+        if (seElimino) {
+            eliminarAdyacentesAlVertice(elem);
+        }
 
         return seElimino;
     }
 
-    private boolean eliminarVerticesAdy(String elem) {
+    private boolean eliminarAdyacentesAlVertice(String elem) {
         boolean seElimino = false;
         NodoVert vertAux = inicio;
         NodoAdy adyAux;
-        //por cada vertice elimino todos los adyacentes que sean igual al 'elem'
-        while (vertAux != null) {
-            // borrarAdy(vertAux.getPrimerAdy(), elem);
+        while (vertAux != null) {//por cada vertice elimino todos los adyacentes que sean igual al 'elem'
             adyAux = vertAux.getPrimerAdy();
-            if (adyAux != null) {
-                while (adyAux.getSigAdyacente() != null) {
-                    if (adyAux.getSigAdyacente().getVertice().equals(elem)) {
-                        adyAux.setSigAdyacente(adyAux.getSigAdyacente());
+            if (adyAux.getVertice().getElem().equals(elem)) {//Si es el inicial
+                adyAux.setSigAdyacente(adyAux.getSigAdyacente());
+                seElimino = true;
+            } else {//no es el inicial loopeo por los vertices
+                while (adyAux.getSigAdyacente() != null && !seElimino) {
+                    if (adyAux.getSigAdyacente().getVertice().getElem().equals(elem)) {  //Si encontre el anterior borro el elemento.
+                        adyAux.setSigAdyacente(adyAux.getSigAdyacente().getSigAdyacente());
                         seElimino = true;
-                    } else {
+                    } else {//sigo buscando
                         adyAux = adyAux.getSigAdyacente();
                     }
                 }
@@ -100,60 +100,28 @@ public class Grafo {
         return seElimino;
     }
 
-    /*private void borrarAdy(NodoAdy ady, String elem) {
-        if (ady != null) {
-            while (ady.getSigAdyacente() != null) {
-                if (ady.getSigAdyacente().getVertice().equals(elem)) {
-                    ady.setSigAdyacente(ady.getSigAdyacente());
-                } else {
-                    ady = ady.getSigAdyacente();
+    public boolean eliminarAdyacente(String origen, String destino) {
+        boolean seElimino = false;
+        NodoVert auxVert = ubicarVertice(origen);
+        NodoAdy auxAdy = auxVert.getPrimerAdy();
+        if (auxVert != null && auxAdy != null) { //si existe el origen y tiene adyacentes
+            if (auxAdy.getVertice().getElem().equals(destino)) {//si es el prrimero
+                auxAdy.setSigAdyacente(auxAdy.getSigAdyacente());
+                seElimino = true;
+            } else { //es algun otro elemento en la lista de adyacentes de auxVert
+                while (auxAdy.getSigAdyacente() != null && !seElimino) {
+                    if (auxAdy.getSigAdyacente().getVertice().getElem().equals(destino)) {//si es este eliminar
+                        auxAdy.setSigAdyacente(auxAdy.getSigAdyacente().getSigAdyacente());
+                        seElimino = true;
+                    } else {//sigo buscando
+                        auxAdy = auxAdy.getSigAdyacente();
+                    }
                 }
             }
         }
-    }*/
-
-    /*
-    public boolean eliminarVertice(String elem) {
-        boolean res = false;
-        Vertice vertice = inicio, anterior = null, verif;
-        Adyacente aux, prox;
-        verif = obtenerVertice(elem);
-        if (verif != null) {
-            while (vertice != null) {
-                if (vertice.getSiguienteVertice() != null) {
-                    if (vertice.getSiguienteVertice().getElemento().equals(elem)) {
-                        anterior = vertice;
-                    }
-                }
-                if (vertice.getPrimerAdyacente() != null) {
-                    if (vertice.getPrimerAdyacente().getVerticeAdyacente().getElemento().equals(elem)) {
-                        vertice.setPrimerAdyacente(vertice.getPrimerAdyacente().getProximoAdyacente());
-                    }
-                }
-                aux = vertice.getPrimerAdyacente();
-                while (aux != null) {
-                    prox = aux.getProximoAdyacente();
-                    if (prox != null && prox.getVerticeAdyacente().getElemento().equals(elem)) {
-                        aux.setProximoAdyacente(prox.getProximoAdyacente());
-                    }
-                    aux = prox;
-                }
-                vertice = vertice.getSiguienteVertice();
-            }
-            if (inicio.getElemento().equals(elem)) {
-                inicio = inicio.getSiguienteVertice();
-                res = true;
-            } else {
-                if (anterior != null) {
-                    anterior.setSiguienteVertice(anterior.getSiguienteVertice().getSiguienteVertice());
-                    res = true;
-                }
-            }
-        }
-        return res;
+        return seElimino;
     }
 
-     */
     public ListaStr listarProfundidad() {
         ListaStr visitados = new ListaStr();
         NodoVert aux = this.inicio;
